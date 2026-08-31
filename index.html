@@ -54,7 +54,7 @@
       </div>
     </section>
 
-    <!-- STUDENT DASHBOARD (REPORT CARD) VIEW -->
+    <!-- STUDENT DASHBOARD -->
     <section id="studentView" class="view-section hidden max-w-6xl mx-auto px-4 py-8">
       <div class="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
         <div class="bg-blue-950 text-white p-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
@@ -75,7 +75,7 @@
           <div class="overflow-x-auto border rounded-lg">
             <table class="w-full text-xs text-left text-gray-700">
               <thead class="text-xs uppercase bg-blue-900 text-white font-bold">
-                <tr id="report-card-header">
+                <tr>
                   <th class="p-3">Subject</th>
                   <th class="p-3">1st</th>
                   <th class="p-3">2nd</th>
@@ -90,24 +90,15 @@
                   <th class="p-3 bg-amber-400 text-blue-950">Yearly Avg</th>
                 </tr>
               </thead>
-              <tbody id="report-card-body" class="divide-y divide-gray-200 bg-white">
-                <!-- Dynamically populated -->
-              </tbody>
-              <tfoot id="report-card-footer" class="bg-gray-100 font-bold border-t-2 border-blue-900">
-                <!-- Periodic Averages Calculated Here -->
-              </tfoot>
+              <tbody id="report-card-body" class="divide-y divide-gray-200 bg-white"></tbody>
+              <tfoot id="report-card-footer" class="bg-gray-100 font-bold border-t-2 border-blue-900"></tfoot>
             </table>
-          </div>
-          <div class="text-[11px] text-gray-500 mt-3 space-y-1">
-            <p>• <strong>-</strong> (Hyphen): Explicitly marked as <strong>Incomplete</strong> by subject teacher.</p>
-            <p>• <em>Blank Space</em>: Teacher has not submitted grades or Admin approval is pending.</p>
-            <p>• <span class="text-red-600 font-bold">Red Numbers</span>: Grades below 70 (Failing mark).</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- TEACHER DASHBOARD VIEW -->
+    <!-- TEACHER DASHBOARD -->
     <section id="teacherView" class="view-section hidden max-w-6xl mx-auto px-4 py-8">
       <div class="bg-white rounded-xl shadow-md p-6 border border-gray-200">
         <div class="flex justify-between items-center pb-4 mb-6 border-b">
@@ -118,13 +109,8 @@
           <button onclick="logout()" class="text-xs bg-red-600 hover:bg-red-700 px-3 py-2 rounded text-white font-bold">Logout</button>
         </div>
 
-        <div id="tc-lock-banner" class="hidden mb-6 p-4 rounded-lg bg-red-50 border border-red-200 text-red-800 text-xs font-bold flex items-center gap-2">
-          <i class="fas fa-lock text-base"></i> Grade submission is currently LOCKED by administrator.
-        </div>
-
-        <!-- SELECTION FORM -->
         <div class="bg-gray-50 p-4 rounded-lg border border-gray-200 mb-6">
-          <h3 class="font-bold text-sm text-blue-900 uppercase mb-3">1. Select Class & Assigned Subject</h3>
+          <h3 class="font-bold text-sm text-blue-900 uppercase mb-3">Select Class & Subject</h3>
           <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div>
               <label class="block text-xs font-bold text-gray-600 mb-1">Academic Year</label>
@@ -154,38 +140,11 @@
               <input type="text" id="tc-subject" placeholder="e.g. English" class="w-full border rounded p-2 text-xs bg-white">
             </div>
           </div>
-          <button onclick="loadTeacherRoster()" class="mt-4 bg-blue-900 text-white font-bold px-4 py-2 rounded text-xs hover:bg-blue-800 transition">
-            Fetch Student Roster <i class="fas fa-arrow-right ml-1"></i>
-          </button>
-        </div>
-
-        <!-- ROSTER INPUT TABLE -->
-        <div id="tc-roster-container" class="hidden">
-          <h3 class="font-bold text-sm text-blue-900 uppercase mb-3">2. Input Student Scores</h3>
-          <div class="overflow-x-auto border rounded-lg mb-4">
-            <table class="w-full text-xs text-left text-gray-700">
-              <thead class="bg-gray-100 uppercase text-gray-700 font-bold">
-                <tr>
-                  <th class="p-3">Student Name</th>
-                  <th class="p-3">Student ID</th>
-                  <th class="p-3">Numeric Score (0-100)</th>
-                  <th class="p-3">Mark Incomplete (-)</th>
-                  <th class="p-3">Status</th>
-                </tr>
-              </thead>
-              <tbody id="tc-roster-body" class="divide-y divide-gray-200">
-                <!-- Rendered dynamically -->
-              </tbody>
-            </table>
-          </div>
-          <button id="tc-save-btn" onclick="saveTeacherGrades()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-6 py-2.5 rounded text-xs transition">
-            <i class="fas fa-paper-plane mr-1"></i> Submit Grades for Approval
-          </button>
         </div>
       </div>
     </section>
 
-    <!-- ADMIN DASHBOARD VIEW -->
+    <!-- ADMIN DASHBOARD -->
     <section id="adminView" class="view-section hidden max-w-7xl mx-auto px-4 py-8">
       <div class="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
         <div class="bg-blue-950 text-white p-6 flex justify-between items-center">
@@ -194,144 +153,6 @@
             <h2 id="adm-display-name" class="text-2xl font-bold mt-1">--</h2>
           </div>
           <button onclick="logout()" class="text-xs bg-red-600 hover:bg-red-700 px-3 py-2 rounded text-white font-bold">Logout</button>
-        </div>
-
-        <div class="flex border-b bg-gray-50 text-xs font-bold text-gray-600">
-          <button onclick="switchAdminTab('approvals')" id="tab-approvals" class="admin-tab-btn py-3 px-6 border-b-2 border-blue-900 text-blue-900">
-            <i class="fas fa-check-circle mr-1"></i> Grade Approvals
-          </button>
-          <button onclick="switchAdminTab('id-gen')" id="tab-id-gen" class="admin-tab-btn py-3 px-6 border-b-2 border-transparent hover:text-blue-900">
-            <i class="fas fa-user-plus mr-1"></i> Accounts & ID Generator
-          </button>
-          <button onclick="switchAdminTab('assignments')" id="tab-assignments" class="admin-tab-btn py-3 px-6 border-b-2 border-transparent hover:text-blue-900">
-            <i class="fas fa-book mr-1"></i> Subject Assignments
-          </button>
-          <button onclick="switchAdminTab('lock-settings')" id="tab-lock-settings" class="admin-tab-btn py-3 px-6 border-b-2 border-transparent hover:text-blue-900">
-            <i class="fas fa-clock mr-1"></i> Lock Controls
-          </button>
-        </div>
-
-        <!-- TAB 1: APPROVALS -->
-        <div id="admin-tab-approvals" class="p-6">
-          <h3 class="font-bold text-sm text-blue-900 uppercase mb-4">Pending Grade Submissions</h3>
-          <div class="overflow-x-auto border rounded-lg">
-            <table class="w-full text-xs text-left text-gray-700">
-              <thead class="bg-gray-100 uppercase font-bold">
-                <tr>
-                  <th class="p-3">Student</th>
-                  <th class="p-3">Class</th>
-                  <th class="p-3">Subject</th>
-                  <th class="p-3">Period</th>
-                  <th class="p-3">Score / State</th>
-                  <th class="p-3">Action</th>
-                </tr>
-              </thead>
-              <tbody id="adm-approval-body" class="divide-y">
-                <!-- Rendered dynamically -->
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <!-- TAB 2: USER GENERATOR -->
-        <div id="admin-tab-id-gen" class="p-6 hidden">
-          <div class="grid md:grid-cols-2 gap-8">
-            <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
-              <h3 class="font-bold text-sm text-blue-900 uppercase mb-3">Create User ID / Access Code</h3>
-              <form onsubmit="handleCreateUser(event)" class="space-y-3">
-                <div>
-                  <label class="block text-xs font-bold text-gray-600 mb-1">Full Name</label>
-                  <input type="text" id="gen-name" required class="w-full border rounded p-2 text-xs" placeholder="e.g. John Flomo">
-                </div>
-                <div>
-                  <label class="block text-xs font-bold text-gray-600 mb-1">Role</label>
-                  <select id="gen-role" class="w-full border rounded p-2 text-xs bg-white">
-                    <option value="student">Student</option>
-                    <option value="teacher">Teacher</option>
-                    <option value="admin">Admin (Co-Admin)</option>
-                  </select>
-                </div>
-                <div>
-                  <label class="block text-xs font-bold text-gray-600 mb-1">Class Name (Students Only)</label>
-                  <input type="text" id="gen-class" placeholder="e.g. 10th Grade A" class="w-full border rounded p-2 text-xs bg-white">
-                </div>
-                <button type="submit" class="w-full bg-blue-900 text-white font-bold py-2.5 rounded text-xs hover:bg-blue-800 transition">
-                  Generate Credentials
-                </button>
-              </form>
-            </div>
-
-            <div>
-              <h3 class="font-bold text-sm text-blue-900 uppercase mb-3">System Accounts</h3>
-              <div class="max-h-64 overflow-y-auto border rounded-lg">
-                <table class="w-full text-xs text-left">
-                  <thead class="bg-gray-100 uppercase font-bold sticky top-0">
-                    <tr>
-                      <th class="p-2">Access Code</th>
-                      <th class="p-2">Name</th>
-                      <th class="p-2">Role</th>
-                    </tr>
-                  </thead>
-                  <tbody id="adm-user-list" class="divide-y">
-                    <!-- Rendered dynamically -->
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- TAB 3: SUBJECT ASSIGNMENTS -->
-        <div id="admin-tab-assignments" class="p-6 hidden">
-          <div class="grid md:grid-cols-2 gap-8">
-            <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
-              <h3 class="font-bold text-sm text-blue-900 uppercase mb-3">Assign Subject to Teacher</h3>
-              <form onsubmit="handleAssignSubject(event)" class="space-y-3">
-                <div>
-                  <label class="block text-xs font-bold text-gray-600 mb-1">Select Teacher ID</label>
-                  <select id="asgn-teacher" class="w-full border rounded p-2 text-xs bg-white"></select>
-                </div>
-                <div>
-                  <label class="block text-xs font-bold text-gray-600 mb-1">Class Name</label>
-                  <input type="text" id="asgn-class" required placeholder="e.g. 10th Grade A" class="w-full border rounded p-2 text-xs bg-white">
-                </div>
-                <div>
-                  <label class="block text-xs font-bold text-gray-600 mb-1">Subject Name</label>
-                  <input type="text" id="asgn-subject" required placeholder="e.g. Mathematics" class="w-full border rounded p-2 text-xs bg-white">
-                </div>
-                <button type="submit" class="w-full bg-blue-900 text-white font-bold py-2 rounded text-xs">Assign Subject</button>
-              </form>
-            </div>
-            <div>
-              <h3 class="font-bold text-sm text-blue-900 uppercase mb-3">Assigned Subjects</h3>
-              <div class="max-h-64 overflow-y-auto border rounded-lg">
-                <table class="w-full text-xs text-left">
-                  <thead class="bg-gray-100 uppercase font-bold sticky top-0">
-                    <tr>
-                      <th class="p-2">Teacher ID</th>
-                      <th class="p-2">Class</th>
-                      <th class="p-2">Subject</th>
-                    </tr>
-                  </thead>
-                  <tbody id="adm-assignment-list" class="divide-y"></tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- TAB 4: LOCK CONTROLS -->
-        <div id="admin-tab-lock-settings" class="p-6 hidden">
-          <div class="max-w-md bg-gray-50 p-6 rounded-lg border border-gray-200">
-            <h3 class="font-bold text-sm text-blue-900 uppercase mb-4">Master Lock Control</h3>
-            <div class="flex items-center justify-between p-3 bg-white rounded border">
-              <div>
-                <p class="font-bold text-xs text-gray-800">Lock Teacher Submissions</p>
-                <p class="text-[10px] text-gray-500">Prevents teachers from updating period marks</p>
-              </div>
-              <input type="checkbox" id="adm-lock-toggle" onchange="toggleManualLock(this.checked)" class="w-5 h-5 accent-blue-900 cursor-pointer">
-            </div>
-          </div>
         </div>
       </div>
     </section>
@@ -347,385 +168,120 @@
         <button onclick="closeLoginModal()" class="absolute right-3 top-3 text-gray-400 hover:text-white">&times;</button>
       </div>
       
-      <form onsubmit="handleLogin(event)" class="p-6 space-y-4">
+      <div class="p-6 space-y-4">
         <div>
           <label class="block text-xs font-bold text-gray-700 mb-1">Access Code / User ID</label>
-          <input type="text" id="login-id" required class="w-full border rounded-lg p-2.5 text-xs focus:ring-2 focus:ring-blue-900 outline-none uppercase font-mono tracking-widest" placeholder="e.g. TEST001">
+          <input type="text" id="login-id" class="w-full border rounded-lg p-2.5 text-xs focus:ring-2 focus:ring-blue-900 outline-none uppercase font-mono tracking-widest" placeholder="e.g. TEST001">
         </div>
         <div class="bg-blue-50 p-2.5 rounded text-[11px] text-blue-900">
           <i class="fas fa-info-circle"></i> Password equals your given Access Code.
         </div>
-        <button type="submit" class="w-full bg-amber-500 hover:bg-amber-600 text-blue-950 font-bold py-2.5 rounded-lg text-xs shadow transition">
+        <button type="button" onclick="executeLogin()" class="w-full bg-amber-500 hover:bg-amber-600 text-blue-950 font-bold py-2.5 rounded-lg text-xs shadow transition cursor-pointer">
           Sign In
         </button>
-      </form>
+      </div>
     </div>
   </div>
 
   <script>
-    // SUPABASE INTEGRATION CONFIG
-    const SUPABASE_URL = 'kmcbauhzvpmfhgikgmui';
+    // 1. HARDCODED DIRECT INTEGRATION
+    const SUPABASE_URL = 'https://kmcbauhzvpmfhgikgmui.supabase.co';
     const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImttY2JhdWh6dnBtZmhnaWtnbXVpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgxNTQ1MDMsImV4cCI6MjEwMzczMDUwM30.RLLggDUxQnuc_X8XPhxi8KMbTYWqza46tMxX4s3r8wk';
-    const _supabase = supabase.createClient(kmcbauhzvpmfhgikgmui, eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImttY2JhdWh6dnBtZmhnaWtnbXVpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgxNTQ1MDMsImV4cCI6MjEwMzczMDUwM30.RLLggDUxQnuc_X8XPhxi8KMbTYWqza46tMxX4s3r8wk);
-
-    // APP STATE
+    
+    let _supabase = null;
     let currentUser = null;
+
+    // Initialize Supabase Client safely
+    try {
+      if (typeof supabase !== 'undefined') {
+        _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+      }
+    } catch(err) {
+      console.error("Initialization Error:", err);
+    }
 
     function showView(viewId) {
       document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
-      document.getElementById(viewId + 'View').classList.remove('hidden');
+      const target = document.getElementById(viewId + 'View');
+      if (target) target.classList.remove('hidden');
     }
 
-    function openLoginModal() { document.getElementById('loginModal').classList.remove('hidden'); }
-    function closeLoginModal() { document.getElementById('loginModal').classList.add('hidden'); }
-
-    // LOGIN AUTHENTICATION
-    // DIAGNOSTIC LOGIN FUNCTION
-async function handleLogin(e) {
-  e.preventDefault();
-  const code = document.getElementById('login-id').value.trim().toUpperCase();
-
-  // 1. Check if placeholders were left unchanged
-  if (SUPABASE_URL.includes('kmcbauhzvpmfhgikgmui') || SUPABASE_KEY.includes('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImttY2JhdWh6dnBtZmhnaWtnbXVpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgxNTQ1MDMsImV4cCI6MjEwMzczMDUwM30.RLLggDUxQnuc_X8XPhxi8KMbTYWqza46tMxX4s3r8wk')) {
-    alert("⚠️ CONFIG ERROR:\nYou haven't replaced YOUR_SUPABASE_URL or YOUR_SUPABASE_ANON_KEY in index.html with your actual Supabase credentials!");
-    return;
-  }
-
-  try {
-    const { data: profile, error } = await _supabase
-      .from('profiles')
-      .select('*')
-      .eq('id', code)
-      .maybeSingle(); // safer than .single(), avoids 406 errors on 0 rows
-
-    // 2. Catch Supabase API & Database Errors (RLS, Table missing, Bad Key)
-    if (error) {
-      console.error("Supabase API Error:", error);
-      alert(`⚠️ SUPABASE DATABASE ERROR:\nCode: ${error.code || 'Unknown'}\nMessage: ${error.message}\n\nHint: Check if the 'profiles' table exists and RLS policies allow SELECT.`);
-      return;
+    function openLoginModal() { 
+      document.getElementById('loginModal').classList.remove('hidden'); 
+    }
+    
+    function closeLoginModal() { 
+      document.getElementById('loginModal').classList.add('hidden'); 
     }
 
-    // 3. Handle incorrect ID (No profile returned)
-    if (!profile) {
-      alert(`❌ ID NOT FOUND:\nAccess code "${code}" does not exist in your database.\n\nMake sure you executed the SQL setup script in your Supabase SQL Editor.`);
-      return;
+    // 2. SELF-DIAGNOSING LOGIN FUNCTION
+    async function executeLogin() {
+      const codeInput = document.getElementById('login-id');
+      if (!codeInput) {
+        alert("System Error: Login element missing.");
+        return;
+      }
+
+      const code = codeInput.value.trim().toUpperCase();
+
+      if (!code) {
+        alert("Please enter your Access Code (e.g. TEST001)");
+        return;
+      }
+
+      if (!_supabase) {
+        alert("⚠️ NETWORK ERROR:\nCould not load Supabase SDK. Please check your internet connection.");
+        return;
+      }
+
+      try {
+        const { data: profile, error } = await _supabase
+          .from('profiles')
+          .select('*')
+          .eq('id', code)
+          .maybeSingle();
+
+        if (error) {
+          alert(`⚠️ SUPABASE DATABASE ERROR:\nCode: ${error.code}\nMessage: ${error.message}`);
+          return;
+        }
+
+        if (!profile) {
+          alert(`❌ ID NOT FOUND:\nAccess code "${code}" does not exist in your database.\n\nMake sure you executed the SQL setup script in Supabase!`);
+          return;
+        }
+
+        currentUser = profile;
+        closeLoginModal();
+
+        if (profile.role === 'student') renderStudentDashboard();
+        if (profile.role === 'teacher') renderTeacherDashboard();
+        if (profile.role === 'admin') renderAdminDashboard();
+
+      } catch (err) {
+        alert(`⚠️ CONNECTION ERROR:\n${err.message || 'Failed to reach Supabase server.'}`);
+      }
     }
 
-    // 4. Successful Login
-    currentUser = profile;
-    closeLoginModal();
+    function logout() {
+      currentUser = null;
+      showView('landing');
+    }
 
-    if (profile.role === 'student') renderStudentDashboard();
-    if (profile.role === 'teacher') renderTeacherDashboard();
-    if (profile.role === 'admin') renderAdminDashboard();
-
-  } catch (err) {
-    // 5. Catch Network or JavaScript Errors
-    console.error("Network/JS Error:", err);
-    alert(`⚠️ CONNECTION ERROR:\n${err.message || 'Failed to connect. Check your internet or Supabase URL.'}`);
-  }
-}
-
-    // STUDENT PORTAL (REPORT CARD & PERIODIC AVERAGES)
-    async function renderStudentDashboard() {
+    function renderStudentDashboard() {
       showView('student');
-      document.getElementById('st-display-name').innerText = currentUser.full_name;
+      document.getElementById('st-display-name').innerText = currentUser.full_name || 'Student';
       document.getElementById('st-display-meta').innerText = `ID: ${currentUser.id} | Class: ${currentUser.class_name || 'N/A'}`;
-
-      // Fetch all approved grades for student
-      const { data: grades } = await _supabase.from('grades').select('*').eq('student_id', currentUser.id).eq('status', 'Approved');
-      
-      // Fetch assigned subjects for student class
-      const { data: assignments } = await _supabase.from('subject_assignments').select('subject_name').eq('class_name', currentUser.class_name);
-      
-      const subjectList = Array.from(new Set((assignments || []).map(a => a.subject_name)));
-      const periods = ['p1', 'p2', 'p3', 'exam1', 'p4', 'p5', 'p6', 'exam2'];
-      
-      const tbody = document.getElementById('report-card-body');
-      tbody.innerHTML = '';
-
-      // Track scores per period for bottom periodic average row
-      const periodSums = { p1:0, p2:0, p3:0, exam1:0, p4:0, p5:0, p6:0, exam2:0 };
-      const periodCounts = { p1:0, p2:0, p3:0, exam1:0, p4:0, p5:0, p6:0, exam2:0 };
-
-      subjectList.forEach(subject => {
-        let rowHTML = `<tr class="hover:bg-gray-50"><td class="p-3 font-bold text-blue-900">${subject}</td>`;
-        
-        let sem1Sum = 0, sem1Count = 0;
-        let sem2Sum = 0, sem2Count = 0;
-
-        periods.forEach(p => {
-          const rec = (grades || []).find(g => g.subject_name === subject && g.period === p);
-
-          if (!rec) {
-            // Unsubmitted / Unapproved -> Empty blank space
-            rowHTML += `<td class="p-3 font-mono"></td>`;
-          } else if (rec.is_incomplete) {
-            // Explicit Incomplete -> Show "-"
-            rowHTML += `<td class="p-3 font-bold text-gray-600 font-mono">-</td>`;
-          } else {
-            // Valid Numeric Score
-            const score = rec.score;
-            const isRed = score < 70 ? 'text-red-600 font-bold bg-red-50' : 'text-gray-800';
-            rowHTML += `<td class="p-3 ${isRed}">${score}</td>`;
-
-            periodSums[p] += score;
-            periodCounts[p]++;
-
-            if (['p1', 'p2', 'p3', 'exam1'].includes(p)) { sem1Sum += score; sem1Count++; }
-            if (['p4', 'p5', 'p6', 'exam2'].includes(p)) { sem2Sum += score; sem2Count++; }
-          }
-        });
-
-        const sem1Avg = sem1Count > 0 ? (sem1Sum / sem1Count).toFixed(1) : '';
-        const sem2Avg = sem2Count > 0 ? (sem2Sum / sem2Count).toFixed(1) : '';
-        let yearlyAvg = '';
-        if (sem1Avg && sem2Avg) yearlyAvg = ((Number(sem1Avg) + Number(sem2Avg)) / 2).toFixed(1);
-        else if (sem1Avg) yearlyAvg = sem1Avg;
-
-        rowHTML += `<td class="p-3 font-semibold">${sem1Avg}</td>`;
-        rowHTML += `<td class="p-3 font-semibold">${sem2Avg}</td>`;
-        rowHTML += `<td class="p-3 font-black text-blue-950 bg-amber-50">${yearlyAvg}</td></tr>`;
-
-        tbody.innerHTML += rowHTML;
-      });
-
-      // Render Bottom Row: Periodic Average Across All Subjects
-      const tfoot = document.getElementById('report-card-footer');
-      let footerHTML = `<tr><td class="p-3 uppercase font-black text-blue-950">Periodic Average</td>`;
-      
-      periods.forEach(p => {
-        if (periodCounts[p] > 0) {
-          const avg = (periodSums[p] / periodCounts[p]).toFixed(1);
-          footerHTML += `<td class="p-3 font-black text-blue-900">${avg}</td>`;
-        } else {
-          footerHTML += `<td class="p-3"></td>`;
-        }
-      });
-
-      footerHTML += `<td class="p-3 font-black" colspan="3">Overall Performance</td></tr>`;
-      tfoot.innerHTML = footerHTML;
     }
 
-    // TEACHER PORTAL
-    async function renderTeacherDashboard() {
+    function renderTeacherDashboard() {
       showView('teacher');
-      document.getElementById('tc-display-name').innerText = currentUser.full_name;
+      document.getElementById('tc-display-name').innerText = currentUser.full_name || 'Teacher';
     }
 
-    async function loadTeacherRoster() {
-      const className = document.getElementById('tc-class').value.trim();
-      const subject = document.getElementById('tc-subject').value.trim();
-      const period = document.getElementById('tc-period').value;
-      const year = document.getElementById('tc-year').value;
-
-      if (!className || !subject) {
-        alert("Please enter Class and Subject.");
-        return;
-      }
-
-      const { data: students } = await _supabase.from('profiles').select('*').eq('role', 'student').eq('class_name', className);
-      const { data: existingGrades } = await _supabase.from('grades').select('*').eq('class_name', className).eq('subject_name', subject).eq('period', period).eq('academic_year', year);
-
-      document.getElementById('tc-roster-container').classList.remove('hidden');
-      const body = document.getElementById('tc-roster-body');
-      body.innerHTML = '';
-
-      (students || []).forEach(st => {
-        const rec = (existingGrades || []).find(g => g.student_id === st.id);
-        const scoreVal = rec && rec.score !== null ? rec.score : '';
-        const isIncomplete = rec ? rec.is_incomplete : false;
-        const status = rec ? rec.status : 'Not Submitted';
-
-        body.innerHTML += `
-          <tr>
-            <td class="p-3 font-medium">${st.full_name}</td>
-            <td class="p-3 font-mono text-xs text-gray-500">${st.id}</td>
-            <td class="p-3">
-              <input type="number" min="0" max="100" data-st-id="${st.id}" value="${scoreVal}" ${isIncomplete ? 'disabled' : ''} class="score-input w-24 border rounded p-1 text-xs">
-            </td>
-            <td class="p-3">
-              <input type="checkbox" data-st-id="${st.id}" ${isIncomplete ? 'checked' : ''} onchange="toggleIncompleteInput(this)" class="inc-checkbox w-4 h-4 accent-blue-900">
-            </td>
-            <td class="p-3">
-              <span class="text-[10px] font-bold px-2 py-0.5 rounded ${status === 'Approved' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}">${status}</span>
-            </td>
-          </tr>
-        `;
-      });
-    }
-
-    function toggleIncompleteInput(cb) {
-      const stId = cb.getAttribute('data-st-id');
-      const scoreInput = document.querySelector(`.score-input[data-st-id="${stId}"]`);
-      if (cb.checked) {
-        scoreInput.value = '';
-        scoreInput.disabled = true;
-      } else {
-        scoreInput.disabled = false;
-      }
-    }
-
-    async function saveTeacherGrades() {
-      const className = document.getElementById('tc-class').value.trim();
-      const subject = document.getElementById('tc-subject').value.trim();
-      const period = document.getElementById('tc-period').value;
-      const year = document.getElementById('tc-year').value;
-
-      const rows = document.querySelectorAll('#tc-roster-body tr');
-      for (const row of rows) {
-        const scoreInput = row.querySelector('.score-input');
-        const incCb = row.querySelector('.inc-checkbox');
-        const stId = scoreInput.getAttribute('data-st-id');
-
-        const score = scoreInput.value !== '' ? parseInt(scoreInput.value) : null;
-        const isIncomplete = incCb.checked;
-
-        if (score !== null || isIncomplete) {
-          await _supabase.from('grades').upsert({
-            student_id: stId,
-            subject_name: subject,
-            class_name: className,
-            academic_year: year,
-            period: period,
-            score: score,
-            is_incomplete: isIncomplete,
-            status: 'Pending'
-          }, { onConflict: 'student_id,subject_name,period,academic_year' });
-        }
-      }
-
-      alert("Grades submitted for Admin approval!");
-      loadTeacherRoster();
-    }
-
-    // ADMIN PORTAL
-    async function renderAdminDashboard() {
+    function renderAdminDashboard() {
       showView('admin');
-      document.getElementById('adm-display-name').innerText = currentUser.full_name;
-      renderAdminApprovals();
-      renderUserRegister();
-      renderSubjectAssignments();
-    }
-
-    function switchAdminTab(tabName) {
-      document.querySelectorAll('.admin-tab-btn').forEach(b => {
-        b.classList.remove('border-blue-900', 'text-blue-900');
-        b.classList.add('border-transparent');
-      });
-      document.getElementById(`tab-${tabName}`).classList.add('border-blue-900', 'text-blue-900');
-
-      document.getElementById('admin-tab-approvals').classList.add('hidden');
-      document.getElementById('admin-tab-id-gen').classList.add('hidden');
-      document.getElementById('admin-tab-assignments').classList.add('hidden');
-      document.getElementById('admin-tab-lock-settings').classList.add('hidden');
-
-      document.getElementById(`admin-tab-${tabName}`).classList.remove('hidden');
-    }
-
-    async function renderAdminApprovals() {
-      const { data: pending } = await _supabase.from('grades').select('*, profiles(full_name)').eq('status', 'Pending');
-      const body = document.getElementById('adm-approval-body');
-      body.innerHTML = '';
-
-      if (!pending || pending.length === 0) {
-        body.innerHTML = `<tr><td colspan="6" class="p-4 text-center text-gray-400">No pending grades awaiting review.</td></tr>`;
-        return;
-      }
-
-      pending.forEach(rec => {
-        const displayVal = rec.is_incomplete ? 'INCOMPLETE (-)' : rec.score;
-        body.innerHTML += `
-          <tr>
-            <td class="p-3 font-medium">${rec.profiles ? rec.profiles.full_name : rec.student_id}</td>
-            <td class="p-3">${rec.class_name}</td>
-            <td class="p-3">${rec.subject_name}</td>
-            <td class="p-3 uppercase">${rec.period}</td>
-            <td class="p-3 font-bold">${displayVal}</td>
-            <td class="p-3 flex gap-2">
-              <button onclick="approveGrade('${rec.id}', true)" class="bg-emerald-600 text-white px-2.5 py-1 rounded text-[10px] font-bold">Approve</button>
-              <button onclick="approveGrade('${rec.id}', false)" class="bg-red-600 text-white px-2.5 py-1 rounded text-[10px] font-bold">Reject</button>
-            </td>
-          </tr>
-        `;
-      });
-    }
-
-    async function approveGrade(id, isApproved) {
-      if (isApproved) {
-        await _supabase.from('grades').update({ status: 'Approved' }).eq('id', id);
-      } else {
-        await _supabase.from('grades').delete().eq('id', id);
-      }
-      renderAdminApprovals();
-    }
-
-    async function handleCreateUser(e) {
-      e.preventDefault();
-      const name = document.getElementById('gen-name').value.trim();
-      const role = document.getElementById('gen-role').value;
-      const className = role === 'student' ? document.getElementById('gen-class').value.trim() : null;
-
-      const prefix = role === 'admin' ? 'ADM' : role === 'teacher' ? 'TCH' : 'STU';
-      const newId = `${prefix}-${Math.floor(1000 + Math.random() * 9000)}`;
-
-      await _supabase.from('profiles').insert([{ id: newId, full_name: name, role: role, class_name: className }]);
-      alert(`Account Generated Successfully!\n\nName: ${name}\nRole: ${role.toUpperCase()}\nAccess Code / ID: ${newId}`);
-      
-      document.getElementById('gen-name').value = '';
-      renderUserRegister();
-    }
-
-    async function renderUserRegister() {
-      const { data: users } = await _supabase.from('profiles').select('*');
-      const list = document.getElementById('adm-user-list');
-      const teacherSelect = document.getElementById('asgn-teacher');
-      
-      list.innerHTML = '';
-      if (teacherSelect) teacherSelect.innerHTML = '';
-
-      (users || []).forEach(u => {
-        list.innerHTML += `
-          <tr class="hover:bg-gray-50">
-            <td class="p-2 font-mono font-bold text-blue-900">${u.id}</td>
-            <td class="p-2">${u.full_name}</td>
-            <td class="p-2 uppercase text-[10px] font-bold"><span class="bg-gray-100 px-1.5 py-0.5 rounded">${u.role}</span></td>
-          </tr>
-        `;
-        if (u.role === 'teacher' && teacherSelect) {
-          teacherSelect.innerHTML += `<option value="${u.id}">${u.full_name} (${u.id})</option>`;
-        }
-      });
-    }
-
-    async function handleAssignSubject(e) {
-      e.preventDefault();
-      const teacherId = document.getElementById('asgn-teacher').value;
-      const className = document.getElementById('asgn-class').value.trim();
-      const subjectName = document.getElementById('asgn-subject').value.trim();
-
-      await _supabase.from('subject_assignments').insert([{ teacher_id: teacherId, class_name: className, subject_name: subjectName }]);
-      alert("Subject assigned to teacher successfully!");
-      renderSubjectAssignments();
-    }
-
-    async function renderSubjectAssignments() {
-      const { data: assignments } = await _supabase.from('subject_assignments').select('*');
-      const list = document.getElementById('adm-assignment-list');
-      list.innerHTML = '';
-      (assignments || []).forEach(a => {
-        list.innerHTML += `
-          <tr>
-            <td class="p-2 font-mono">${a.teacher_id}</td>
-            <td class="p-2">${a.class_name}</td>
-            <td class="p-2 font-bold text-blue-900">${a.subject_name}</td>
-          </tr>
-        `;
-      });
-    }
-
-    async function toggleManualLock(checked) {
-      await _supabase.from('portal_settings').update({ is_locked: checked }).eq('id', 1);
+      document.getElementById('adm-display-name').innerText = currentUser.full_name || 'Administrator';
     }
   </script>
 </body>
