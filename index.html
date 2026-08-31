@@ -380,29 +380,50 @@
     function closeLoginModal() { document.getElementById('loginModal').classList.add('hidden'); }
 
     // LOGIN AUTHENTICATION
-    async function handleLogin(e) {
-      e.preventDefault();
-      const code = document.getElementById('login-id').value.trim().toUpperCase();
+    // DIAGNOSTIC LOGIN FUNCTION
+async function handleLogin(e) {
+  e.preventDefault();
+  const code = document.getElementById('login-id').value.trim().toUpperCase();
 
-      const { data: profile, error } = await _supabase.from('profiles').select('*').eq('id', code).single();
+  // 1. Check if placeholders were left unchanged
+  if (SUPABASE_URL.includes('kmcbauhzvpmfhgikgmui') || SUPABASE_KEY.includes('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImttY2JhdWh6dnBtZmhnaWtnbXVpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgxNTQ1MDMsImV4cCI6MjEwMzczMDUwM30.RLLggDUxQnuc_X8XPhxi8KMbTYWqza46tMxX4s3r8wk')) {
+    alert("⚠️ CONFIG ERROR:\nYou haven't replaced YOUR_SUPABASE_URL or YOUR_SUPABASE_ANON_KEY in index.html with your actual Supabase credentials!");
+    return;
+  }
 
-      if (error || !profile) {
-        alert("Invalid Access Code. Default Admin account is TEST001.");
-        return;
-      }
+  try {
+    const { data: profile, error } = await _supabase
+      .from('profiles')
+      .select('*')
+      .eq('id', code)
+      .maybeSingle(); // safer than .single(), avoids 406 errors on 0 rows
 
-      currentUser = profile;
-      closeLoginModal();
-
-      if (profile.role === 'student') renderStudentDashboard();
-      if (profile.role === 'teacher') renderTeacherDashboard();
-      if (profile.role === 'admin') renderAdminDashboard();
+    // 2. Catch Supabase API & Database Errors (RLS, Table missing, Bad Key)
+    if (error) {
+      console.error("Supabase API Error:", error);
+      alert(`⚠️ SUPABASE DATABASE ERROR:\nCode: ${error.code || 'Unknown'}\nMessage: ${error.message}\n\nHint: Check if the 'profiles' table exists and RLS policies allow SELECT.`);
+      return;
     }
 
-    function logout() {
-      currentUser = null;
-      showView('landing');
+    // 3. Handle incorrect ID (No profile returned)
+    if (!profile) {
+      alert(`❌ ID NOT FOUND:\nAccess code "${code}" does not exist in your database.\n\nMake sure you executed the SQL setup script in your Supabase SQL Editor.`);
+      return;
     }
+
+    // 4. Successful Login
+    currentUser = profile;
+    closeLoginModal();
+
+    if (profile.role === 'student') renderStudentDashboard();
+    if (profile.role === 'teacher') renderTeacherDashboard();
+    if (profile.role === 'admin') renderAdminDashboard();
+
+  } catch (err) {
+    // 5. Catch Network or JavaScript Errors
+    console.error("Network/JS Error:", err);
+    alert(`⚠️ CONNECTION ERROR:\n${err.message || 'Failed to connect. Check your internet or Supabase URL.'}`);
+  }
 
     // STUDENT PORTAL (REPORT CARD & PERIODIC AVERAGES)
     async function renderStudentDashboard() {
