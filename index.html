@@ -2,121 +2,145 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Great King Academy | Official Portal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Great King Academy | Official Web App</title>
+
+  <!-- PWA & Mobile Web App Meta Tags -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#0f172a">
+
+  <!-- Dynamic Web Manifest for PWA Installability -->
+  <link rel="manifest" id="dynamic-manifest">
+
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  
+  <style>
+    /* Custom App Aesthetics */
+    body { -webkit-tap-highlight-color: transparent; }
+    .glass-card { background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(12px); }
+    .nav-active { color: #f59e0b; border-bottom: 2px solid #f59e0b; }
+    /* Custom scrollbar for grade tables */
+    .app-scrollbar::-webkit-scrollbar { height: 4px; }
+    .app-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+  </style>
 </head>
-<body class="bg-gray-50 font-sans text-gray-800 antialiased min-h-screen flex flex-col">
+<body class="bg-slate-100 font-sans text-slate-800 antialiased min-h-screen flex flex-col pb-16 md:pb-0 selection:bg-amber-400 selection:text-slate-950">
 
-  <!-- TOP NAVIGATION BAR -->
-  <header class="bg-blue-900 text-white sticky top-0 z-40 shadow-md">
+  <!-- TOP APP HEADER -->
+  <header class="bg-slate-900 text-white sticky top-0 z-40 shadow-lg border-b border-slate-800">
     <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
       <div class="flex items-center space-x-3 cursor-pointer" onclick="showView('landing')">
-        <div class="w-10 h-10 rounded-full bg-amber-400 border-2 border-white flex items-center justify-center text-blue-950 font-black text-lg">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-500 to-amber-300 border-2 border-white/20 flex items-center justify-center text-slate-950 font-black text-lg shadow-inner">
           GKA
         </div>
         <div>
-          <h1 class="font-bold text-base md:text-lg leading-tight uppercase tracking-wide">Great King Academy</h1>
-          <p class="text-xs text-amber-300 font-medium">To Be Great... Serve</p>
+          <h1 class="font-black text-base md:text-lg leading-tight tracking-wider uppercase">Great King Academy</h1>
+          <p class="text-[10px] text-amber-400 font-semibold tracking-widest uppercase">To Be Great... Serve</p>
         </div>
       </div>
       
-      <div id="nav-actions">
-        <button onclick="openLoginModal()" class="bg-amber-500 hover:bg-amber-600 text-blue-950 font-bold px-4 py-2 rounded-lg text-sm shadow transition flex items-center gap-2">
-          <i class="fas fa-lock"></i> Portal Access
+      <div id="nav-actions" class="flex items-center gap-2">
+        <button onclick="openPrivacyModal()" class="text-xs text-slate-400 hover:text-white px-2 py-1 rounded">
+          <i class="fas fa-user-shield"></i> <span class="hidden sm:inline">Privacy</span>
+        </button>
+        <button onclick="openLoginModal()" id="btn-portal-access" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-black px-4 py-2 rounded-xl text-xs shadow-lg shadow-amber-500/20 active:scale-95 transition flex items-center gap-2">
+          <i class="fas fa-right-to-bracket"></i> Portal Access
         </button>
       </div>
     </div>
   </header>
 
-  <!-- MAIN CONTAINER -->
+  <!-- MAIN VIEW CONTAINER -->
   <main class="flex-grow">
     
-    <!-- LANDING PAGE VIEW -->
+    <!-- LANDING VIEW -->
     <section id="landingView" class="view-section">
-      <div class="bg-gradient-to-r from-blue-950 via-blue-900 to-indigo-900 text-white py-12 px-4 border-b-4 border-amber-500">
-        <div class="max-w-4xl mx-auto text-center space-y-4">
-          <span class="inline-block bg-amber-500/20 text-amber-300 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider border border-amber-500/30">
-            A Technical and Academic Institute
+      <div class="bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 text-white py-14 px-4 border-b-4 border-amber-500 shadow-2xl">
+        <div class="max-w-3xl mx-auto text-center space-y-5">
+          <span class="inline-flex items-center gap-1.5 bg-amber-500/10 text-amber-300 text-[11px] font-bold px-3 py-1 rounded-full uppercase tracking-widest border border-amber-500/30">
+            <i class="fas fa-graduation-cap"></i> Official Academic & Technical Portal
           </span>
-          <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight">Quality, Christ-Centered Education</h2>
-          <p class="text-sm md:text-base text-gray-200 max-w-2xl mx-auto">
-            Providing underprivileged, orphaned, and abandoned children access to competent and affordable education in Monrovia, Liberia.
+          <h2 class="text-3xl md:text-5xl font-black tracking-tight leading-tight">Empowering Students Through Excellence</h2>
+          <p class="text-xs md:text-sm text-slate-300 max-w-xl mx-auto leading-relaxed">
+            Providing accessible, Christ-centered education and real-time academic grade tracking in Monrovia, Liberia.
           </p>
-          <div class="pt-2 flex justify-center gap-4">
-            <button onclick="openLoginModal()" class="bg-amber-500 text-blue-950 font-bold px-6 py-3 rounded-lg shadow-lg hover:bg-amber-400 transition">
-              Sign In to Portal
+          <div class="pt-3 flex justify-center gap-3">
+            <button onclick="openLoginModal()" class="bg-gradient-to-r from-amber-500 to-amber-400 text-slate-950 font-black px-6 py-3 rounded-xl shadow-xl hover:brightness-110 active:scale-95 transition text-xs uppercase tracking-wider">
+              Launch Student / Staff Portal
             </button>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- STUDENT DASHBOARD -->
-    <section id="studentView" class="view-section hidden max-w-6xl mx-auto px-4 py-8">
-      <div class="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
-        <div class="bg-blue-950 text-white p-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-          <div>
-            <span class="bg-amber-500 text-blue-950 text-xs font-black px-2 py-1 rounded uppercase">Student Portal</span>
-            <h2 id="st-display-name" class="text-2xl font-bold mt-1">--</h2>
-            <p id="st-display-meta" class="text-xs text-gray-300">ID: -- | Class: --</p>
-          </div>
-          <button onclick="logout()" class="text-xs bg-red-600 hover:bg-red-700 px-3 py-2 rounded text-white font-bold">Logout</button>
+    <!-- STUDENT DASHBOARD VIEW -->
+    <section id="studentView" class="view-section hidden max-w-6xl mx-auto px-4 py-6 space-y-4">
+      <div class="bg-slate-900 text-white p-5 rounded-2xl shadow-xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 border border-slate-800">
+        <div>
+          <span class="bg-amber-400 text-slate-950 text-[10px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider">Student Profile</span>
+          <h2 id="st-display-name" class="text-xl font-black mt-1">--</h2>
+          <p id="st-display-meta" class="text-xs text-slate-400 font-mono">ID: -- | Class: --</p>
+        </div>
+        <button onclick="logout()" class="text-xs bg-red-500/20 text-red-400 hover:bg-red-500 hover:text-white px-3 py-2 rounded-xl font-bold border border-red-500/30 transition">
+          <i class="fas fa-sign-out-alt mr-1"></i> Sign Out
+        </button>
+      </div>
+
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 md:p-6 space-y-4">
+        <div class="flex items-center justify-between">
+          <h3 class="font-black text-slate-900 text-base md:text-lg">Academic Report Card</h3>
+          <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-2.5 py-1 rounded-full"><i class="fas fa-shield-alt mr-1"></i> Official Record</span>
         </div>
 
-        <div class="p-6">
-          <div class="flex items-center justify-between mb-4">
-            <h3 class="font-bold text-lg text-blue-950">Official Academic Report Card</h3>
-            <span id="st-status-badge" class="text-xs bg-amber-100 text-amber-800 px-2.5 py-1 rounded-full font-bold">Academic Session 2026-2027</span>
-          </div>
-
-          <div class="overflow-x-auto border rounded-lg">
-            <table class="w-full text-xs text-left text-gray-700">
-              <thead class="text-xs uppercase bg-blue-900 text-white font-bold">
-                <tr>
-                  <th class="p-3">Subject</th>
-                  <th class="p-3">1st</th>
-                  <th class="p-3">2nd</th>
-                  <th class="p-3">3rd</th>
-                  <th class="p-3">Exam 1</th>
-                  <th class="p-3">Sem 1 Avg</th>
-                  <th class="p-3">4th</th>
-                  <th class="p-3">5th</th>
-                  <th class="p-3">6th</th>
-                  <th class="p-3">Exam 2</th>
-                  <th class="p-3">Sem 2 Avg</th>
-                  <th class="p-3 bg-amber-400 text-blue-950">Yearly Avg</th>
-                </tr>
-              </thead>
-              <tbody id="report-card-body" class="divide-y divide-gray-200 bg-white">
-                <tr><td colspan="12" class="p-6 text-center text-gray-400">Loading grade records...</td></tr>
-              </tbody>
-            </table>
-          </div>
+        <div class="overflow-x-auto app-scrollbar border border-slate-200 rounded-xl">
+          <table class="w-full text-xs text-left text-slate-700">
+            <thead class="text-[11px] uppercase bg-slate-900 text-white font-bold">
+              <tr>
+                <th class="p-3">Subject</th>
+                <th class="p-3">1st</th>
+                <th class="p-3">2nd</th>
+                <th class="p-3">3rd</th>
+                <th class="p-3">Exam 1</th>
+                <th class="p-3">Sem 1 Avg</th>
+                <th class="p-3">4th</th>
+                <th class="p-3">5th</th>
+                <th class="p-3">6th</th>
+                <th class="p-3">Exam 2</th>
+                <th class="p-3">Sem 2 Avg</th>
+                <th class="p-3 bg-amber-400 text-slate-950">Final Avg</th>
+              </tr>
+            </thead>
+            <tbody id="report-card-body" class="divide-y divide-slate-100 bg-white">
+              <tr><td colspan="12" class="p-6 text-center text-slate-400 font-medium">Fetching grades...</td></tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </section>
 
-    <!-- TEACHER DASHBOARD -->
-    <section id="teacherView" class="view-section hidden max-w-6xl mx-auto px-4 py-8">
-      <div class="bg-white rounded-xl shadow-md p-6 border border-gray-200 space-y-6">
-        <div class="flex justify-between items-center pb-4 border-b">
-          <div>
-            <span class="bg-blue-100 text-blue-900 text-xs font-bold px-2 py-1 rounded uppercase">Teacher Gradebook</span>
-            <h2 id="tc-display-name" class="text-xl font-bold text-blue-950">--</h2>
-          </div>
-          <button onclick="logout()" class="text-xs bg-red-600 hover:bg-red-700 px-3 py-2 rounded text-white font-bold">Logout</button>
+    <!-- TEACHER DASHBOARD VIEW -->
+    <section id="teacherView" class="view-section hidden max-w-6xl mx-auto px-4 py-6 space-y-4">
+      <div class="bg-slate-900 text-white p-5 rounded-2xl shadow-xl flex justify-between items-center border border-slate-800">
+        <div>
+          <span class="bg-blue-400 text-slate-950 text-[10px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider">Teacher Gradebook</span>
+          <h2 id="tc-display-name" class="text-xl font-black mt-1">--</h2>
         </div>
+        <button onclick="logout()" class="text-xs bg-red-500/20 text-red-400 hover:bg-red-500 hover:text-white px-3 py-2 rounded-xl font-bold border border-red-500/30 transition">
+          <i class="fas fa-sign-out-alt mr-1"></i> Sign Out
+        </button>
+      </div>
 
-        <!-- SELECT CLASS & SUBJECT -->
-        <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
-          <h3 class="font-bold text-xs text-blue-900 uppercase mb-3"><i class="fas fa-filter mr-1"></i> Grade Entry Selection</h3>
-          <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 space-y-5">
+        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+          <h4 class="font-bold text-xs uppercase text-slate-600 mb-3"><i class="fas fa-filter text-amber-500 mr-1"></i> Select Class & Subject</h4>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
             <div>
-              <label class="block text-xs font-bold text-gray-600 mb-1">Target Period</label>
-              <select id="tc-period" class="w-full border rounded p-2 text-xs bg-white font-medium">
+              <label class="block text-[11px] font-bold text-slate-700 mb-1">Target Period</label>
+              <select id="tc-period" class="w-full border rounded-xl p-2.5 text-xs bg-white font-semibold border-slate-300">
                 <option value="p1">1st Period (1st Month)</option>
                 <option value="p2">2nd Period (2nd Month)</option>
                 <option value="p3">3rd Period (3rd Month)</option>
@@ -128,68 +152,69 @@
               </select>
             </div>
             <div>
-              <label class="block text-xs font-bold text-gray-600 mb-1">Target Class</label>
-              <input type="text" id="tc-class" placeholder="e.g. 10th Grade A" class="w-full border rounded p-2 text-xs bg-white">
+              <label class="block text-[11px] font-bold text-slate-700 mb-1">Target Class</label>
+              <input type="text" id="tc-class" placeholder="e.g. 10th grade A" class="w-full border rounded-xl p-2.5 text-xs border-slate-300">
             </div>
             <div>
-              <label class="block text-xs font-bold text-gray-600 mb-1">Subject Name</label>
-              <input type="text" id="tc-subject" placeholder="e.g. Mathematics" class="w-full border rounded p-2 text-xs bg-white">
+              <label class="block text-[11px] font-bold text-slate-700 mb-1">Subject Name</label>
+              <input type="text" id="tc-subject" placeholder="e.g. Mathematics" class="w-full border rounded-xl p-2.5 text-xs border-slate-300">
             </div>
             <div class="flex items-end">
-              <button onclick="loadTeacherRoster()" class="w-full bg-blue-900 hover:bg-blue-950 text-white font-bold px-4 py-2 rounded text-xs transition">
+              <button onclick="loadTeacherRoster()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold p-2.5 rounded-xl text-xs transition shadow-md">
                 <i class="fas fa-users mr-1"></i> Load Class Roster
               </button>
             </div>
           </div>
         </div>
 
-        <!-- ROSTER GRADE INPUT TABLE -->
         <div id="tc-roster-container" class="hidden space-y-4">
           <div class="flex justify-between items-center">
-            <h4 id="tc-roster-title" class="font-bold text-sm text-blue-950">Roster</h4>
-            <span class="text-[11px] text-gray-500">Enter scores from 0-100</span>
+            <h4 id="tc-roster-title" class="font-bold text-sm text-slate-900">Roster</h4>
+            <span class="text-[11px] text-slate-500"><i class="fas fa-exclamation-circle text-amber-500"></i> Scores below 70 are flagged red</span>
           </div>
 
-          <div class="overflow-x-auto border rounded-lg">
-            <table class="w-full text-xs text-left text-gray-700">
-              <thead class="bg-gray-100 uppercase text-gray-700 font-bold">
+          <div class="overflow-x-auto border border-slate-200 rounded-xl">
+            <table class="w-full text-xs text-left">
+              <thead class="bg-slate-100 uppercase text-slate-700 font-bold text-[11px]">
                 <tr>
                   <th class="p-3">Student Name</th>
-                  <th class="p-3">Student ID</th>
+                  <th class="p-3">ID Code</th>
                   <th class="p-3">Score (0 - 100)</th>
                 </tr>
               </thead>
-              <tbody id="tc-roster-body" class="divide-y divide-gray-200 bg-white"></tbody>
+              <tbody id="tc-roster-body" class="divide-y divide-slate-100 bg-white"></tbody>
             </table>
           </div>
 
-          <button onclick="submitTeacherGrades()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-6 py-2.5 rounded-lg text-xs shadow transition">
-            <i class="fas fa-paper-plane mr-1"></i> Submit Grades for Approval
+          <button onclick="submitTeacherGrades()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-6 py-3 rounded-xl text-xs shadow-lg shadow-emerald-600/20 transition flex items-center gap-2">
+            <i class="fas fa-paper-plane"></i> Submit Grades for Approval
           </button>
         </div>
       </div>
     </section>
 
-    <!-- ADMIN DASHBOARD -->
-    <section id="adminView" class="view-section hidden max-w-7xl mx-auto px-4 py-8 space-y-6">
-      <div class="bg-blue-950 text-white p-6 rounded-xl shadow-lg flex justify-between items-center">
+    <!-- ADMIN DASHBOARD VIEW -->
+    <section id="adminView" class="view-section hidden max-w-7xl mx-auto px-4 py-6 space-y-5">
+      <div class="bg-slate-900 text-white p-5 rounded-2xl shadow-xl flex justify-between items-center border border-slate-800">
         <div>
-          <span class="bg-amber-400 text-blue-950 text-xs font-black px-2 py-1 rounded uppercase">Administrator Console</span>
-          <h2 id="adm-display-name" class="text-2xl font-bold mt-1">Developer Admin</h2>
+          <span class="bg-amber-400 text-slate-950 text-[10px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider">Admin Console</span>
+          <h2 id="adm-display-name" class="text-xl font-black mt-1">Administrator</h2>
         </div>
-        <button onclick="logout()" class="text-xs bg-red-600 hover:bg-red-700 px-3 py-2 rounded text-white font-bold">Logout</button>
+        <button onclick="logout()" class="text-xs bg-red-500/20 text-red-400 hover:bg-red-500 hover:text-white px-3 py-2 rounded-xl font-bold border border-red-500/30 transition">
+          <i class="fas fa-sign-out-alt mr-1"></i> Sign Out
+        </button>
       </div>
 
-      <!-- CREATE ACCOUNT FORM -->
-      <div class="bg-white rounded-xl shadow-md p-6 border border-gray-200">
-        <h3 class="font-bold text-base text-blue-950 mb-4 flex items-center gap-2">
-          <i class="fas fa-user-plus text-amber-500"></i> Generate Access Code Credentials
+      <!-- ACCOUNT GENERATOR -->
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 space-y-4">
+        <h3 class="font-black text-slate-900 text-base flex items-center gap-2">
+          <i class="fas fa-user-plus text-amber-500"></i> Register New Credentials
         </h3>
         
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
           <div>
-            <label class="block text-xs font-bold text-gray-700 mb-1">Account Role</label>
-            <select id="adm-role" class="w-full border rounded-lg p-2.5 text-xs bg-gray-50 focus:ring-2 focus:ring-blue-900 outline-none">
+            <label class="block text-[11px] font-bold text-slate-700 mb-1">Account Role</label>
+            <select id="adm-role" class="w-full border rounded-xl p-2.5 text-xs bg-slate-50 font-semibold border-slate-300">
               <option value="student">Student</option>
               <option value="teacher">Teacher</option>
               <option value="admin">Administrator</option>
@@ -197,45 +222,46 @@
           </div>
 
           <div>
-            <label class="block text-xs font-bold text-gray-700 mb-1">Full Name</label>
-            <input type="text" id="adm-name" placeholder="e.g. John Doe" class="w-full border rounded-lg p-2.5 text-xs">
+            <label class="block text-[11px] font-bold text-slate-700 mb-1">Full Name</label>
+            <input type="text" id="adm-name" placeholder="e.g. John Doe" class="w-full border rounded-xl p-2.5 text-xs border-slate-300">
           </div>
 
           <div>
-            <label class="block text-xs font-bold text-gray-700 mb-1">Class Name (Students Only)</label>
-            <input type="text" id="adm-class" placeholder="e.g. 10th Grade A" class="w-full border rounded-lg p-2.5 text-xs">
+            <label class="block text-[11px] font-bold text-slate-700 mb-1">Class Name (Students Only)</label>
+            <input type="text" id="adm-class" placeholder="e.g. 10th grade A" class="w-full border rounded-xl p-2.5 text-xs border-slate-300">
           </div>
 
           <div>
             <div class="flex justify-between items-center mb-1">
-              <label class="block text-xs font-bold text-gray-700">Access ID Code</label>
-              <button onclick="autoGenID()" type="button" class="text-[10px] text-blue-900 hover:underline font-bold">Auto-Generate</button>
+              <label class="block text-[11px] font-bold text-slate-700">Access ID Code</label>
+              <button onclick="autoGenID()" type="button" class="text-[10px] text-amber-600 font-bold hover:underline">Auto-Generate</button>
             </div>
-            <input type="text" id="adm-code" placeholder="e.g. STU101" class="w-full border rounded-lg p-2.5 text-xs font-mono uppercase">
+            <input type="text" id="adm-code" placeholder="e.g. STU101" class="w-full border rounded-xl p-2.5 text-xs font-mono uppercase border-slate-300">
           </div>
         </div>
 
-        <button onclick="createAccount()" class="mt-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-6 py-2.5 rounded-lg text-xs shadow transition">
-          <i class="fas fa-save mr-1"></i> Register User Account
+        <button onclick="createAccount()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-6 py-2.5 rounded-xl text-xs shadow-md transition">
+          <i class="fas fa-save mr-1"></i> Save User Account
         </button>
       </div>
 
-      <!-- PENDING GRADE APPROVAL QUEUE -->
-      <div class="bg-white rounded-xl shadow-md p-6 border border-gray-200">
-        <div class="flex justify-between items-center mb-4">
-          <h3 class="font-bold text-base text-blue-950 flex items-center gap-2">
-            <i class="fas fa-check-circle text-amber-500"></i> Pending Grade Approvals
+      <!-- APPROVAL QUEUE -->
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 space-y-4">
+        <div class="flex justify-between items-center">
+          <h3 class="font-black text-slate-900 text-base flex items-center gap-2">
+            <i class="fas fa-clipboard-check text-amber-500"></i> Pending Grade Approvals
           </h3>
-          <button onclick="fetchPendingApprovals()" class="text-xs bg-gray-100 hover:bg-gray-200 px-3 py-1.5 rounded font-bold text-gray-700">
-            <i class="fas fa-sync-alt mr-1"></i> Refresh Queue
+          <button onclick="fetchPendingApprovals()" class="text-xs bg-slate-100 hover:bg-slate-200 px-3 py-1.5 rounded-lg font-bold text-slate-700">
+            <i class="fas fa-sync-alt mr-1"></i> Refresh
           </button>
         </div>
 
-        <div class="overflow-x-auto border rounded-lg">
-          <table class="w-full text-xs text-left text-gray-700">
-            <thead class="bg-blue-900 text-white uppercase text-[11px] font-bold">
+        <div class="overflow-x-auto app-scrollbar border border-slate-200 rounded-xl">
+          <table class="w-full text-xs text-left">
+            <thead class="bg-slate-900 text-white uppercase text-[11px] font-bold">
               <tr>
                 <th class="p-3">Student ID</th>
+                <th class="p-3">Class</th>
                 <th class="p-3">Subject</th>
                 <th class="p-3">Period</th>
                 <th class="p-3">Score</th>
@@ -243,27 +269,25 @@
                 <th class="p-3">Action</th>
               </tr>
             </thead>
-            <tbody id="adm-approval-body" class="divide-y divide-gray-200 bg-white">
-              <tr><td colspan="6" class="p-4 text-center text-gray-400">Loading pending approvals...</td></tr>
-            </tbody>
+            <tbody id="adm-approval-body" class="divide-y divide-slate-100 bg-white"></tbody>
           </table>
         </div>
       </div>
 
-      <!-- ALL USERS DIRECTORY TABLE -->
-      <div class="bg-white rounded-xl shadow-md p-6 border border-gray-200">
-        <div class="flex justify-between items-center mb-4">
-          <h3 class="font-bold text-base text-blue-950 flex items-center gap-2">
-            <i class="fas fa-users text-blue-900"></i> Registered User Directory
+      <!-- DIRECTORY -->
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 space-y-4">
+        <div class="flex justify-between items-center">
+          <h3 class="font-black text-slate-900 text-base flex items-center gap-2">
+            <i class="fas fa-address-book text-slate-700"></i> User Directory
           </h3>
-          <button onclick="fetchUserDirectory()" class="text-xs bg-gray-100 hover:bg-gray-200 px-3 py-1.5 rounded font-bold text-gray-700">
-            <i class="fas fa-sync-alt mr-1"></i> Refresh List
+          <button onclick="fetchUserDirectory()" class="text-xs bg-slate-100 hover:bg-slate-200 px-3 py-1.5 rounded-lg font-bold text-slate-700">
+            <i class="fas fa-sync-alt mr-1"></i> Refresh
           </button>
         </div>
 
-        <div class="overflow-x-auto border rounded-lg">
-          <table class="w-full text-xs text-left text-gray-700">
-            <thead class="bg-blue-950 text-white uppercase text-[11px] font-bold">
+        <div class="overflow-x-auto app-scrollbar border border-slate-200 rounded-xl">
+          <table class="w-full text-xs text-left">
+            <thead class="bg-slate-900 text-white uppercase text-[11px] font-bold">
               <tr>
                 <th class="p-3">Access ID Code</th>
                 <th class="p-3">Full Name</th>
@@ -271,56 +295,170 @@
                 <th class="p-3">Class</th>
               </tr>
             </thead>
-            <tbody id="adm-user-list" class="divide-y divide-gray-200 bg-white"></tbody>
+            <tbody id="adm-user-list" class="divide-y divide-slate-100 bg-white"></tbody>
           </table>
         </div>
       </div>
-
     </section>
 
   </main>
 
+  <!-- PWA INSTALL POPUP BANNER FOR PHONES -->
+  <div id="pwaInstallBanner" class="fixed bottom-4 left-4 right-4 max-w-md mx-auto bg-slate-900 text-white p-4 rounded-2xl shadow-2xl border border-amber-500/30 hidden z-50 flex items-center justify-between gap-3 animate-bounce">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-xl bg-amber-500 flex items-center justify-center text-slate-950 font-black text-lg">
+        <i class="fas fa-mobile-alt"></i>
+      </div>
+      <div>
+        <p class="font-bold text-xs text-white">Install GKA App</p>
+        <p class="text-[10px] text-slate-300">Add to home screen for fast access</p>
+      </div>
+    </div>
+    <div class="flex items-center gap-2">
+      <button onclick="dismissInstallPrompt()" class="text-xs text-slate-400 hover:text-white px-2 py-1">Later</button>
+      <button onclick="installPWA()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-black px-3 py-1.5 rounded-xl text-xs shadow">
+        Install
+      </button>
+    </div>
+  </div>
+
   <!-- LOGIN MODAL -->
-  <div id="loginModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
-    <div class="bg-white rounded-xl shadow-2xl max-w-sm w-full overflow-hidden border border-amber-500/20">
-      <div class="bg-blue-950 p-4 text-white text-center relative">
-        <h3 class="font-bold text-base">Portal Access</h3>
-        <p class="text-[11px] text-amber-300">Great King Academy Portal</p>
-        <button onclick="closeLoginModal()" class="absolute right-3 top-3 text-gray-400 hover:text-white">&times;</button>
+  <div id="loginModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl shadow-2xl max-w-sm w-full overflow-hidden border border-slate-100">
+      <div class="bg-slate-900 p-5 text-white text-center relative">
+        <div class="w-12 h-12 rounded-2xl bg-amber-500 mx-auto flex items-center justify-center text-slate-950 font-black text-xl mb-2 shadow-lg">
+          GKA
+        </div>
+        <h3 class="font-black text-base">Portal Authentication</h3>
+        <p class="text-[11px] text-amber-400">Great King Academy System</p>
+        <button onclick="closeLoginModal()" class="absolute right-4 top-4 text-slate-400 hover:text-white">&times;</button>
       </div>
       
       <div class="p-6 space-y-4">
         <div>
-          <label class="block text-xs font-bold text-gray-700 mb-1">Access Code / User ID</label>
-          <input type="text" id="login-id" class="w-full border rounded-lg p-2.5 text-xs uppercase font-mono tracking-widest" placeholder="e.g. STU-101">
+          <label class="block text-xs font-bold text-slate-700 mb-1">Access Code / User ID</label>
+          <input type="text" id="login-id" class="w-full border rounded-xl p-3 text-sm font-mono tracking-widest uppercase border-slate-300 focus:ring-2 focus:ring-amber-500 outline-none" placeholder="e.g. STU101">
         </div>
-        <div class="bg-blue-50 p-2.5 rounded text-[11px] text-blue-900">
-          <i class="fas fa-info-circle"></i> Password equals your Access Code.
+        <div class="bg-slate-50 border border-slate-200 p-3 rounded-xl text-[11px] text-slate-600 flex items-start gap-2">
+          <i class="fas fa-shield-alt text-amber-500 mt-0.5"></i>
+          <span>Enter assigned Access ID. Automatic logout occurs after 15 minutes of inactivity.</span>
         </div>
-        <button type="button" onclick="executeLogin()" class="w-full bg-amber-500 hover:bg-amber-600 text-blue-950 font-bold py-2.5 rounded-lg text-xs shadow transition cursor-pointer">
-          Sign In
+        <button type="button" onclick="executeLogin()" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-black py-3 rounded-xl text-xs shadow-lg shadow-amber-500/20 active:scale-95 transition">
+          Sign In to Portal
         </button>
       </div>
     </div>
   </div>
 
+  <!-- PRIVACY POLICY MODAL -->
+  <div id="privacyModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl shadow-2xl max-w-lg w-full max-h-[80vh] overflow-y-auto p-6 space-y-4">
+      <div class="flex justify-between items-center border-b pb-3">
+        <h3 class="font-black text-slate-900 text-base"><i class="fas fa-user-shield text-amber-500 mr-1"></i> Data Protection & Privacy Policy</h3>
+        <button onclick="closePrivacyModal()" class="text-slate-400 hover:text-slate-700 text-xl font-bold">&times;</button>
+      </div>
+      <div class="text-xs text-slate-600 space-y-3 leading-relaxed">
+        <p><strong>1. Information Collection:</strong> Great King Academy collects student names, access codes, class assignments, and grade evaluations solely for educational management.</p>
+        <p><strong>2. Data Security:</strong> All grade transmissions utilize HTTPS TLS encryption. Database access is strictly governed by Row Level Security (RLS) policies in Supabase.</p>
+        <p><strong>3. Access Restrictions:</strong> Students may only view their own registered report card. Grade edits require explicit admin approval.</p>
+      </div>
+      <button onclick="closePrivacyModal()" class="w-full bg-slate-900 text-white font-bold py-2.5 rounded-xl text-xs">Close Privacy Overview</button>
+    </div>
+  </div>
+
   <script>
-    // 1. SUPABASE INTEGRATION CONFIG
+    // 1. SUPABASE CONFIGURATION
     const SUPABASE_URL = 'https://kmcbauhzvpmfhgikgmui.supabase.co';
     const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImttY2JhdWh6dnBtZmhnaWtnbXVpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgxNTQ1MDMsImV4cCI6MjEwMzczMDUwM30.RLLggDUxQnuc_X8XPhxi8KMbTYWqza46tMxX4s3r8wk';
     
     let _supabase = null;
     let currentUser = null;
     let loadedRosterStudents = [];
+    let sessionTimer = null;
+    let deferredPrompt = null;
 
     try {
       if (typeof supabase !== 'undefined') {
         _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
       }
     } catch(err) {
-      console.error("Initialization Error:", err);
+      console.error("Supabase Init Error:", err);
     }
 
+    // 2. DYNAMIC PWA MANIFEST GENERATION
+    (function generatePWAManifest() {
+      const manifest = {
+        name: "Great King Academy Portal",
+        short_name: "GKA Portal",
+        start_url: "./",
+        display: "standalone",
+        background_color: "#0f172a",
+        theme_color: "#0f172a",
+        icons: [{
+          src: "https://cdn-icons-png.flaticon.com/512/2991/2991108.png",
+          sizes: "512x512",
+          type: "image/png"
+        }]
+      };
+      const stringManifest = JSON.stringify(manifest);
+      const blob = new Blob([stringManifest], {type: 'application/json'});
+      const manifestURL = URL.createObjectURL(blob);
+      document.getElementById('dynamic-manifest').setAttribute('href', manifestURL);
+    })();
+
+    // 3. PWA INSTALLATION POPUP LISTENER
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      document.getElementById('pwaInstallBanner').classList.remove('hidden');
+    });
+
+    function installPWA() {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+          if (choiceResult.outcome === 'accepted') {
+            console.log('User installed GKA App');
+          }
+          deferredPrompt = null;
+          document.getElementById('pwaInstallBanner').classList.add('hidden');
+        });
+      }
+    }
+
+    function dismissInstallPrompt() {
+      document.getElementById('pwaInstallBanner').classList.add('hidden');
+    }
+
+    // 4. SCORE RED-FLAG FORMATTER (< 70 IS RED)
+    function renderScoreBadge(val) {
+      if (val === undefined || val === null || val === '-') {
+        return `<span class="text-slate-400 font-mono">-</span>`;
+      }
+      const num = Number(val);
+      if (isNaN(num)) return val;
+      
+      if (num < 70) {
+        return `<span class="bg-red-100 text-red-700 font-black px-2 py-0.5 rounded border border-red-300 text-[11px] inline-block animate-pulse">${num}</span>`;
+      }
+      return `<span class="font-bold text-slate-800">${num}</span>`;
+    }
+
+    // 5. SECURITY SESSION TIMEOUT (15 MINUTES)
+    function resetSessionTimer() {
+      clearTimeout(sessionTimer);
+      if (currentUser) {
+        sessionTimer = setTimeout(() => {
+          alert("🔒 SESSION TIMEOUT: You have been logged out due to 15 minutes of inactivity.");
+          logout();
+        }, 15 * 60 * 1000); // 15 mins
+      }
+    }
+    window.onload = resetSessionTimer;
+    window.onmousemove = resetSessionTimer;
+    window.onkeydown = resetSessionTimer;
+
+    // UI MODAL HELPERS
     function showView(viewId) {
       document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
       const target = document.getElementById(viewId + 'View');
@@ -329,14 +467,16 @@
 
     function openLoginModal() { document.getElementById('loginModal').classList.remove('hidden'); }
     function closeLoginModal() { document.getElementById('loginModal').classList.add('hidden'); }
+    function openPrivacyModal() { document.getElementById('privacyModal').classList.remove('hidden'); }
+    function closePrivacyModal() { document.getElementById('privacyModal').classList.add('hidden'); }
 
-    // LOGIN SYSTEM
+    // LOGIN LOGIC
     async function executeLogin() {
       const codeInput = document.getElementById('login-id');
       const code = codeInput ? codeInput.value.trim().toUpperCase() : '';
 
       if (!code) {
-        alert("Please enter your Access Code!");
+        alert("Please enter your Access ID Code!");
         return;
       }
 
@@ -353,12 +493,13 @@
         }
 
         if (!profile) {
-          alert(`❌ ACCESS CODE NOT FOUND:\nCode "${code}" does not exist in profiles table.`);
+          alert(`❌ ACCESS CODE NOT FOUND:\nCode "${code}" does not exist.`);
           return;
         }
 
         currentUser = profile;
         closeLoginModal();
+        resetSessionTimer();
 
         if (profile.role === 'student') renderStudentDashboard();
         if (profile.role === 'teacher') renderTeacherDashboard();
@@ -371,19 +512,19 @@
 
     function logout() {
       currentUser = null;
+      clearTimeout(sessionTimer);
       showView('landing');
     }
 
-    // STUDENT PORTAL LOGIC
+    // STUDENT PORTAL
     async function renderStudentDashboard() {
       showView('student');
       document.getElementById('st-display-name').innerText = currentUser.full_name || 'Student';
       document.getElementById('st-display-meta').innerText = `ID: ${currentUser.id} | Class: ${currentUser.class_name || 'N/A'}`;
 
       const tbody = document.getElementById('report-card-body');
-      tbody.innerHTML = `<tr><td colspan="12" class="p-6 text-center text-gray-400">Fetching official report card records...</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="12" class="p-6 text-center text-slate-400 font-medium">Fetching official grades...</td></tr>`;
 
-      // Query approved grades for this student
       const { data: grades, error } = await _supabase
         .from('grades')
         .select('*')
@@ -393,17 +534,16 @@
       if (error || !grades || grades.length === 0) {
         tbody.innerHTML = `
           <tr>
-            <td colspan="12" class="p-8 text-center bg-gray-50">
+            <td colspan="12" class="p-8 text-center bg-slate-50">
               <i class="fas fa-clock text-amber-500 text-3xl mb-2"></i>
-              <p class="font-bold text-gray-700">Results Pending / Not Published Yet</p>
-              <p class="text-xs text-gray-400 mt-1">Your teachers have either not submitted grades or they are awaiting final administrative approval.</p>
+              <p class="font-bold text-slate-700">No Approved Grades Published Yet</p>
+              <p class="text-xs text-slate-400 mt-1">Grades submitted by teachers are awaiting final administration approval.</p>
             </td>
           </tr>
         `;
         return;
       }
 
-      // Group grades by subject
       const subjectMap = {};
       grades.forEach(g => {
         if (!subjectMap[g.subject_name]) subjectMap[g.subject_name] = {};
@@ -413,19 +553,9 @@
       tbody.innerHTML = '';
       Object.keys(subjectMap).forEach(subj => {
         const p = subjectMap[subj];
-        const p1 = p.p1 || '-';
-        const p2 = p.p2 || '-';
-        const p3 = p.p3 || '-';
-        const ex1 = p.exam1 || '-';
         
-        // Calculate Sem 1 Avg if numbers exist
         const sem1Scores = [p.p1, p.p2, p.p3, p.exam1].filter(x => typeof x === 'number');
         const sem1Avg = sem1Scores.length ? Math.round(sem1Scores.reduce((a,b)=>a+b,0) / sem1Scores.length) : '-';
-
-        const p4 = p.p4 || '-';
-        const p5 = p.p5 || '-';
-        const p6 = p.p6 || '-';
-        const ex2 = p.exam2 || '-';
 
         const sem2Scores = [p.p4, p.p5, p.p6, p.exam2].filter(x => typeof x === 'number');
         const sem2Avg = sem2Scores.length ? Math.round(sem2Scores.reduce((a,b)=>a+b,0) / sem2Scores.length) : '-';
@@ -434,25 +564,25 @@
         const yrAvg = allScores.length ? Math.round(allScores.reduce((a,b)=>a+b,0) / allScores.length) : '-';
 
         tbody.innerHTML += `
-          <tr class="hover:bg-gray-50 border-b">
-            <td class="p-3 font-bold text-blue-900">${subj}</td>
-            <td class="p-3">${p1}</td>
-            <td class="p-3">${p2}</td>
-            <td class="p-3">${p3}</td>
-            <td class="p-3 font-semibold">${ex1}</td>
-            <td class="p-3 font-bold text-blue-900 bg-blue-50/50">${sem1Avg}</td>
-            <td class="p-3">${p4}</td>
-            <td class="p-3">${p5}</td>
-            <td class="p-3">${p6}</td>
-            <td class="p-3 font-semibold">${ex2}</td>
-            <td class="p-3 font-bold text-blue-900 bg-blue-50/50">${sem2Avg}</td>
-            <td class="p-3 font-black text-blue-950 bg-amber-100">${yrAvg}</td>
+          <tr class="hover:bg-slate-50 border-b border-slate-100">
+            <td class="p-3 font-bold text-slate-900">${subj}</td>
+            <td class="p-3">${renderScoreBadge(p.p1)}</td>
+            <td class="p-3">${renderScoreBadge(p.p2)}</td>
+            <td class="p-3">${renderScoreBadge(p.p3)}</td>
+            <td class="p-3 font-semibold">${renderScoreBadge(p.exam1)}</td>
+            <td class="p-3 bg-slate-50">${renderScoreBadge(sem1Avg)}</td>
+            <td class="p-3">${renderScoreBadge(p.p4)}</td>
+            <td class="p-3">${renderScoreBadge(p.p5)}</td>
+            <td class="p-3">${renderScoreBadge(p.p6)}</td>
+            <td class="p-3 font-semibold">${renderScoreBadge(p.exam2)}</td>
+            <td class="p-3 bg-slate-50">${renderScoreBadge(sem2Avg)}</td>
+            <td class="p-3 bg-amber-50/80 font-black">${renderScoreBadge(yrAvg)}</td>
           </tr>
         `;
       });
     }
 
-    // TEACHER PORTAL LOGIC
+    // TEACHER PORTAL
     function renderTeacherDashboard() {
       showView('teacher');
       document.getElementById('tc-display-name').innerText = currentUser.full_name || 'Teacher';
@@ -463,12 +593,12 @@
       const subject = document.getElementById('tc-subject').value.trim();
 
       if (!targetClass || !subject) {
-        alert("Please specify both the Target Class and Subject Name!");
+        alert("Please enter both Class Name and Subject Name!");
         return;
       }
 
       const tbody = document.getElementById('tc-roster-body');
-      tbody.innerHTML = `<tr><td colspan="3" class="p-4 text-center text-gray-400">Loading class roster...</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="3" class="p-4 text-center text-slate-400">Loading roster...</td></tr>`;
 
       const { data: students, error } = await _supabase
         .from('profiles')
@@ -477,22 +607,24 @@
         .ilike('class_name', targetClass);
 
       if (error || !students || students.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="3" class="p-4 text-center text-red-500">No students found assigned to "${targetClass}". Check student profiles in Admin.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="3" class="p-4 text-center text-red-500 font-bold">No students found assigned to "${targetClass}".</td></tr>`;
         return;
       }
 
       loadedRosterStudents = students;
-      document.getElementById('tc-roster-title').innerText = `Roster for ${targetClass} — ${subject}`;
+      document.getElementById('tc-roster-title').innerText = `Class Roster for ${targetClass} — ${subject}`;
       document.getElementById('tc-roster-container').classList.remove('hidden');
 
       tbody.innerHTML = '';
       students.forEach(st => {
         tbody.innerHTML += `
-          <tr class="border-b">
-            <td class="p-3 font-bold">${st.full_name}</td>
-            <td class="p-3 font-mono text-gray-500">${st.id}</td>
+          <tr class="border-b border-slate-100">
+            <td class="p-3 font-bold text-slate-800">${st.full_name}</td>
+            <td class="p-3 font-mono text-slate-400">${st.id}</td>
             <td class="p-3">
-              <input type="number" min="0" max="100" id="score-${st.id}" placeholder="e.g. 85" class="w-24 border rounded p-1 text-xs font-bold text-blue-900">
+              <input type="number" min="0" max="100" id="score-${st.id}" placeholder="0-100" 
+                     oninput="this.className = this.value !== '' && Number(this.value) < 70 ? 'w-24 border-2 border-red-500 text-red-600 bg-red-50 rounded-lg p-1 text-xs font-black outline-none' : 'w-24 border border-slate-300 rounded-lg p-1 text-xs font-bold text-slate-900 outline-none'"
+                     class="w-24 border border-slate-300 rounded-lg p-1 text-xs font-bold text-slate-900">
             </td>
           </tr>
         `;
@@ -502,38 +634,43 @@
     async function submitTeacherGrades() {
       const period = document.getElementById('tc-period').value;
       const subject = document.getElementById('tc-subject').value.trim();
+      const targetClass = document.getElementById('tc-class').value.trim();
 
       const gradeRecords = [];
       loadedRosterStudents.forEach(st => {
         const val = document.getElementById(`score-${st.id}`).value;
         if (val !== "") {
-          gradeRecords.push({
-            student_id: st.id,
-            subject_name: subject,
-            period: period,
-            score: parseInt(val),
-            status: 'pending' // Send to Admin for review
-          });
+          const numericScore = parseInt(val);
+          if (numericScore >= 0 && numericScore <= 100) {
+            gradeRecords.push({
+              student_id: st.id,
+              class_name: targetClass,
+              subject_name: subject,
+              period: period,
+              score: numericScore,
+              status: 'pending'
+            });
+          }
         }
       });
 
       if (gradeRecords.length === 0) {
-        alert("Please enter at least one score before submitting!");
+        alert("Please enter valid scores (0 to 100) before submitting!");
         return;
       }
 
       const { error } = await _supabase.from('grades').insert(gradeRecords);
 
       if (error) {
-        alert(`⚠️ FAILED TO SUBMIT GRADES:\n${error.message}`);
+        alert(`⚠️ SUBMISSION FAILED:\n${error.message}`);
         return;
       }
 
-      alert(`✅ GRADES SUBMITTED!\n${gradeRecords.length} scores sent to Administrator Console for approval.`);
+      alert(`✅ GRADES SUBMITTED!\n${gradeRecords.length} student scores sent for admin review.`);
       document.getElementById('tc-roster-container').classList.add('hidden');
     }
 
-    // ADMIN PORTAL LOGIC
+    // ADMIN PORTAL
     function renderAdminDashboard() {
       showView('admin');
       document.getElementById('adm-display-name').innerText = currentUser.full_name || 'Administrator';
@@ -555,7 +692,7 @@
       const className = document.getElementById('adm-class').value.trim();
 
       if (!name || !code) {
-        alert("Please enter both Full Name and Access ID Code!");
+        alert("Please enter Full Name and Access ID Code!");
         return;
       }
 
@@ -568,7 +705,7 @@
         return;
       }
 
-      alert(`✅ USER REGISTERED!\nName: ${name}\nID Code: ${code}`);
+      alert(`✅ ACCOUNT CREATED!\n${name} (${code}) registered successfully.`);
       document.getElementById('adm-name').value = '';
       document.getElementById('adm-code').value = '';
       document.getElementById('adm-class').value = '';
@@ -578,29 +715,27 @@
     async function fetchPendingApprovals() {
       if (!_supabase) return;
       const tbody = document.getElementById('adm-approval-body');
-      tbody.innerHTML = `<tr><td colspan="6" class="p-4 text-center text-gray-400">Loading pending approvals...</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="7" class="p-4 text-center text-slate-400">Loading queue...</td></tr>`;
 
-      const { data, error } = await _supabase
-        .from('grades')
-        .select('*')
-        .eq('status', 'pending');
+      const { data, error } = await _supabase.from('grades').select('*').eq('status', 'pending');
 
       if (error || !data || data.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="6" class="p-4 text-center text-gray-400">No pending grade submissions in queue.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="7" class="p-4 text-center text-slate-400">No pending grade submissions.</td></tr>`;
         return;
       }
 
       tbody.innerHTML = '';
       data.forEach(g => {
         tbody.innerHTML += `
-          <tr class="border-b hover:bg-gray-50">
-            <td class="p-3 font-mono font-bold text-blue-900">${g.student_id}</td>
+          <tr class="border-b border-slate-100 hover:bg-slate-50">
+            <td class="p-3 font-mono font-bold text-slate-900">${g.student_id}</td>
+            <td class="p-3 text-slate-600">${g.class_name || '--'}</td>
             <td class="p-3 font-semibold">${g.subject_name}</td>
             <td class="p-3 uppercase text-xs">${g.period}</td>
-            <td class="p-3 font-black">${g.score}</td>
-            <td class="p-3"><span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded text-[10px] font-bold">Pending Review</span></td>
+            <td class="p-3 font-black">${renderScoreBadge(g.score)}</td>
+            <td class="p-3"><span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded text-[10px] font-bold">Pending</span></td>
             <td class="p-3">
-              <button onclick="approveGrade('${g.id}')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-3 py-1 rounded text-[11px]">
+              <button onclick="approveGrade('${g.id}')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-3 py-1 rounded-lg text-[11px] shadow">
                 Approve & Publish
               </button>
             </td>
@@ -610,43 +745,38 @@
     }
 
     async function approveGrade(gradeRecordId) {
-      const { error } = await _supabase
-        .from('grades')
-        .update({ status: 'approved' })
-        .eq('id', gradeRecordId);
-
+      const { error } = await _supabase.from('grades').update({ status: 'approved' }).eq('id', gradeRecordId);
       if (error) {
-        alert(`⚠️ APPROVAL ERROR:\n${error.message}`);
+        alert(`⚠️ APPROVAL FAILED:\n${error.message}`);
         return;
       }
-
       fetchPendingApprovals();
     }
 
     async function fetchUserDirectory() {
       if (!_supabase) return;
       const tbody = document.getElementById('adm-user-list');
-      tbody.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-gray-400">Loading directory...</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-slate-400">Loading directory...</td></tr>`;
 
       const { data, error } = await _supabase.from('profiles').select('*').order('created_at', { ascending: false });
 
       if (error || !data || data.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-gray-400">No accounts registered yet.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-slate-400">No registered accounts.</td></tr>`;
         return;
       }
 
       tbody.innerHTML = '';
       data.forEach(user => {
         tbody.innerHTML += `
-          <tr class="hover:bg-gray-50 border-b">
-            <td class="p-3 font-mono font-bold text-blue-900">${user.id}</td>
+          <tr class="hover:bg-slate-50 border-b border-slate-100">
+            <td class="p-3 font-mono font-bold text-slate-900">${user.id}</td>
             <td class="p-3 font-medium">${user.full_name || '--'}</td>
             <td class="p-3">
               <span class="px-2 py-0.5 rounded text-[10px] font-black uppercase ${user.role==='student'?'bg-emerald-100 text-emerald-800':user.role==='teacher'?'bg-blue-100 text-blue-800':'bg-amber-100 text-amber-800'}">
                 ${user.role}
               </span>
             </td>
-            <td class="p-3 text-gray-500">${user.class_name || '--'}</td>
+            <td class="p-3 text-slate-500">${user.class_name || '--'}</td>
           </tr>
         `;
       });
