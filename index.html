@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -65,36 +65,6 @@
           </div>
           <button onclick="logout()" class="text-xs bg-red-600 hover:bg-red-700 px-3 py-2 rounded text-white font-bold">Logout</button>
         </div>
-
-        <div class="p-6">
-          <div class="flex items-center justify-between mb-4">
-            <h3 class="font-bold text-lg text-blue-950">Academic Report Card</h3>
-            <span class="text-xs bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded-full font-bold">Official Records</span>
-          </div>
-
-          <div class="overflow-x-auto border rounded-lg">
-            <table class="w-full text-xs text-left text-gray-700">
-              <thead class="text-xs uppercase bg-blue-900 text-white font-bold">
-                <tr>
-                  <th class="p-3">Subject</th>
-                  <th class="p-3">1st</th>
-                  <th class="p-3">2nd</th>
-                  <th class="p-3">3rd</th>
-                  <th class="p-3">Exam 1</th>
-                  <th class="p-3">Sem 1 Avg</th>
-                  <th class="p-3">4th</th>
-                  <th class="p-3">5th</th>
-                  <th class="p-3">6th</th>
-                  <th class="p-3">Exam 2</th>
-                  <th class="p-3">Sem 2 Avg</th>
-                  <th class="p-3 bg-amber-400 text-blue-950">Yearly Avg</th>
-                </tr>
-              </thead>
-              <tbody id="report-card-body" class="divide-y divide-gray-200 bg-white"></tbody>
-              <tfoot id="report-card-footer" class="bg-gray-100 font-bold border-t-2 border-blue-900"></tfoot>
-            </table>
-          </div>
-        </div>
       </div>
     </section>
 
@@ -108,53 +78,89 @@
           </div>
           <button onclick="logout()" class="text-xs bg-red-600 hover:bg-red-700 px-3 py-2 rounded text-white font-bold">Logout</button>
         </div>
-
-        <div class="bg-gray-50 p-4 rounded-lg border border-gray-200 mb-6">
-          <h3 class="font-bold text-sm text-blue-900 uppercase mb-3">Select Class & Subject</h3>
-          <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div>
-              <label class="block text-xs font-bold text-gray-600 mb-1">Academic Year</label>
-              <select id="tc-year" class="w-full border rounded p-2 text-xs bg-white">
-                <option value="2026-2027">2026-2027</option>
-              </select>
-            </div>
-            <div>
-              <label class="block text-xs font-bold text-gray-600 mb-1">Target Period</label>
-              <select id="tc-period" class="w-full border rounded p-2 text-xs bg-white">
-                <option value="p1">1st Period</option>
-                <option value="p2">2nd Period</option>
-                <option value="p3">3rd Period</option>
-                <option value="exam1">Exam 1</option>
-                <option value="p4">4th Period</option>
-                <option value="p5">5th Period</option>
-                <option value="p6">6th Period</option>
-                <option value="exam2">Exam 2</option>
-              </select>
-            </div>
-            <div>
-              <label class="block text-xs font-bold text-gray-600 mb-1">Class</label>
-              <input type="text" id="tc-class" placeholder="e.g. 10th Grade A" class="w-full border rounded p-2 text-xs bg-white">
-            </div>
-            <div>
-              <label class="block text-xs font-bold text-gray-600 mb-1">Subject</label>
-              <input type="text" id="tc-subject" placeholder="e.g. English" class="w-full border rounded p-2 text-xs bg-white">
-            </div>
-          </div>
-        </div>
       </div>
     </section>
 
     <!-- ADMIN DASHBOARD -->
-    <section id="adminView" class="view-section hidden max-w-7xl mx-auto px-4 py-8">
-      <div class="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
-        <div class="bg-blue-950 text-white p-6 flex justify-between items-center">
+    <section id="adminView" class="view-section hidden max-w-7xl mx-auto px-4 py-8 space-y-6">
+      
+      <!-- ADMIN HEADER -->
+      <div class="bg-blue-950 text-white p-6 rounded-xl shadow-lg flex justify-between items-center">
+        <div>
+          <span class="bg-amber-400 text-blue-950 text-xs font-black px-2 py-1 rounded uppercase">Administrator Console</span>
+          <h2 id="adm-display-name" class="text-2xl font-bold mt-1">Developer Admin</h2>
+        </div>
+        <button onclick="logout()" class="text-xs bg-red-600 hover:bg-red-700 px-3 py-2 rounded text-white font-bold">Logout</button>
+      </div>
+
+      <!-- CREATE ID & ACCOUNT FORM -->
+      <div class="bg-white rounded-xl shadow-md p-6 border border-gray-200">
+        <h3 class="font-bold text-base text-blue-950 mb-4 flex items-center gap-2">
+          <i class="fas fa-user-plus text-amber-500"></i> Generate Teacher & Student Access IDs
+        </h3>
+        
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
           <div>
-            <span class="bg-amber-400 text-blue-950 text-xs font-black px-2 py-1 rounded uppercase">Administrator Console</span>
-            <h2 id="adm-display-name" class="text-2xl font-bold mt-1">--</h2>
+            <label class="block text-xs font-bold text-gray-700 mb-1">Account Role</label>
+            <select id="adm-role" class="w-full border rounded-lg p-2.5 text-xs bg-gray-50 focus:ring-2 focus:ring-blue-900 outline-none">
+              <option value="student">Student</option>
+              <option value="teacher">Teacher</option>
+              <option value="admin">Administrator</option>
+            </select>
           </div>
-          <button onclick="logout()" class="text-xs bg-red-600 hover:bg-red-700 px-3 py-2 rounded text-white font-bold">Logout</button>
+
+          <div>
+            <label class="block text-xs font-bold text-gray-700 mb-1">Full Name</label>
+            <input type="text" id="adm-name" placeholder="e.g. John Doe" class="w-full border rounded-lg p-2.5 text-xs focus:ring-2 focus:ring-blue-900 outline-none">
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-gray-700 mb-1">Class Name (Students Only)</label>
+            <input type="text" id="adm-class" placeholder="e.g. 10th Grade A" class="w-full border rounded-lg p-2.5 text-xs focus:ring-2 focus:ring-blue-900 outline-none">
+          </div>
+
+          <div>
+            <div class="flex justify-between items-center mb-1">
+              <label class="block text-xs font-bold text-gray-700">Access ID Code</label>
+              <button onclick="autoGenID()" type="button" class="text-[10px] text-blue-900 hover:underline font-bold">Auto-Generate</button>
+            </div>
+            <input type="text" id="adm-code" placeholder="e.g. STU101" class="w-full border rounded-lg p-2.5 text-xs font-mono uppercase focus:ring-2 focus:ring-blue-900 outline-none">
+          </div>
+        </div>
+
+        <button onclick="createAccount()" class="mt-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-6 py-2.5 rounded-lg text-xs shadow transition">
+          <i class="fas fa-save mr-1"></i> Save & Register Profile
+        </button>
+      </div>
+
+      <!-- ALL USERS DIRECTORY TABLE -->
+      <div class="bg-white rounded-xl shadow-md p-6 border border-gray-200">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="font-bold text-base text-blue-950 flex items-center gap-2">
+            <i class="fas fa-users text-blue-900"></i> Active Access ID Directory
+          </h3>
+          <button onclick="fetchUserDirectory()" class="text-xs bg-gray-100 hover:bg-gray-200 px-3 py-1.5 rounded font-bold text-gray-700">
+            <i class="fas fa-sync-alt mr-1"></i> Refresh List
+          </button>
+        </div>
+
+        <div class="overflow-x-auto border rounded-lg">
+          <table class="w-full text-xs text-left text-gray-700">
+            <thead class="bg-blue-950 text-white uppercase text-[11px] font-bold">
+              <tr>
+                <th class="p-3">Access ID Code</th>
+                <th class="p-3">Full Name</th>
+                <th class="p-3">Role</th>
+                <th class="p-3">Class</th>
+              </tr>
+            </thead>
+            <tbody id="adm-user-list" class="divide-y divide-gray-200 bg-white">
+              <tr><td colspan="4" class="p-4 text-center text-gray-400">Loading directory...</td></tr>
+            </tbody>
+          </table>
         </div>
       </div>
+
     </section>
 
   </main>
@@ -184,14 +190,13 @@
   </div>
 
   <script>
-    // 1. HARDCODED DIRECT INTEGRATION
+    // 1. SUPABASE INTEGRATION CONFIG
     const SUPABASE_URL = 'https://kmcbauhzvpmfhgikgmui.supabase.co';
     const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImttY2JhdWh6dnBtZmhnaWtnbXVpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgxNTQ1MDMsImV4cCI6MjEwMzczMDUwM30.RLLggDUxQnuc_X8XPhxi8KMbTYWqza46tMxX4s3r8wk';
     
     let _supabase = null;
     let currentUser = null;
 
-    // Initialize Supabase Client safely
     try {
       if (typeof supabase !== 'undefined') {
         _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
@@ -206,31 +211,21 @@
       if (target) target.classList.remove('hidden');
     }
 
-    function openLoginModal() { 
-      document.getElementById('loginModal').classList.remove('hidden'); 
-    }
-    
-    function closeLoginModal() { 
-      document.getElementById('loginModal').classList.add('hidden'); 
-    }
+    function openLoginModal() { document.getElementById('loginModal').classList.remove('hidden'); }
+    function closeLoginModal() { document.getElementById('loginModal').classList.add('hidden'); }
 
-    // 2. SELF-DIAGNOSING LOGIN FUNCTION
+    // LOGIN LOGIC
     async function executeLogin() {
       const codeInput = document.getElementById('login-id');
-      if (!codeInput) {
-        alert("System Error: Login element missing.");
-        return;
-      }
-
-      const code = codeInput.value.trim().toUpperCase();
+      const code = codeInput ? codeInput.value.trim().toUpperCase() : '';
 
       if (!code) {
-        alert("Please enter your Access Code (e.g. TEST001)");
+        alert("Please enter your Access Code!");
         return;
       }
 
       if (!_supabase) {
-        alert("⚠️ NETWORK ERROR:\nCould not load Supabase SDK. Please check your internet connection.");
+        alert("⚠️ Network Error: Supabase client not loaded.");
         return;
       }
 
@@ -242,12 +237,12 @@
           .maybeSingle();
 
         if (error) {
-          alert(`⚠️ SUPABASE DATABASE ERROR:\nCode: ${error.code}\nMessage: ${error.message}`);
+          alert(`⚠️ SUPABASE ERROR:\n${error.message}`);
           return;
         }
 
         if (!profile) {
-          alert(`❌ ID NOT FOUND:\nAccess code "${code}" does not exist in your database.\n\nMake sure you executed the SQL setup script in Supabase!`);
+          alert(`❌ ACCESS CODE NOT FOUND:\nCode "${code}" does not exist in your database profiles.`);
           return;
         }
 
@@ -259,13 +254,90 @@
         if (profile.role === 'admin') renderAdminDashboard();
 
       } catch (err) {
-        alert(`⚠️ CONNECTION ERROR:\n${err.message || 'Failed to reach Supabase server.'}`);
+        alert(`⚠️ CONNECTION ERROR:\n${err.message}`);
       }
     }
 
     function logout() {
       currentUser = null;
       showView('landing');
+    }
+
+    // ADMIN FUNCTIONS
+    function autoGenID() {
+      const role = document.getElementById('adm-role').value;
+      const prefix = role === 'student' ? 'STU' : role === 'teacher' ? 'TCH' : 'ADM';
+      const randomNum = Math.floor(1000 + Math.random() * 9000);
+      document.getElementById('adm-code').value = `${prefix}-${randomNum}`;
+    }
+
+    async function createAccount() {
+      const role = document.getElementById('adm-role').value;
+      const name = document.getElementById('adm-name').value.trim();
+      const code = document.getElementById('adm-code').value.trim().toUpperCase();
+      const className = document.getElementById('adm-class').value.trim();
+
+      if (!name || !code) {
+        alert("Please fill in both Full Name and Access ID Code!");
+        return;
+      }
+
+      try {
+        const { error } = await _supabase
+          .from('profiles')
+          .insert([{ id: code, full_name: name, role: role, class_name: className }]);
+
+        if (error) {
+          alert(`⚠️ FAILED TO CREATE ACCOUNT:\n${error.message}`);
+          return;
+        }
+
+        alert(`✅ SUCCESS!\nCreated ${role.toUpperCase()} account for ${name}.\nAccess ID: ${code}`);
+        
+        // Reset form
+        document.getElementById('adm-name').value = '';
+        document.getElementById('adm-code').value = '';
+        document.getElementById('adm-class').value = '';
+        
+        fetchUserDirectory();
+      } catch (err) {
+        alert(`⚠️ ERROR:\n${err.message}`);
+      }
+    }
+
+    async function fetchUserDirectory() {
+      if (!_supabase) return;
+      
+      const tbody = document.getElementById('adm-user-list');
+      tbody.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-gray-400">Loading directory...</td></tr>`;
+
+      const { data, error } = await _supabase.from('profiles').select('*').order('created_at', { ascending: false });
+
+      if (error) {
+        tbody.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-red-500">Error loading users: ${error.message}</td></tr>`;
+        return;
+      }
+
+      if (!data || data.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-gray-400">No profiles found in database.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = '';
+      data.forEach(user => {
+        tbody.innerHTML += `
+          <tr class="hover:bg-gray-50 border-b">
+            <td class="p-3 font-mono font-bold text-blue-900">${user.id}</td>
+            <td class="p-3 font-medium">${user.full_name || '--'}</td>
+            <td class="p-3">
+              <span class="px-2 py-0.5 rounded text-[10px] font-black uppercase ${user.role==='student'?'bg-emerald-100 text-emerald-800':user.role==='teacher'?'bg-blue-100 text-blue-800':'bg-amber-100 text-amber-800'}">
+                ${user.role}
+              </span>
+            </td>
+            <td class="p-3 text-gray-500">${user.class_name || '--'}</td>
+          </tr>
+        `;
+      });
     }
 
     function renderStudentDashboard() {
@@ -282,6 +354,7 @@
     function renderAdminDashboard() {
       showView('admin');
       document.getElementById('adm-display-name').innerText = currentUser.full_name || 'Administrator';
+      fetchUserDirectory();
     }
   </script>
 </body>
