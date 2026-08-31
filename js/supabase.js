@@ -1,6 +1,0 @@
-// Paste your actual credentials inside these quotes
-const SUPABASE_URL = 'https://dpbvwmpvdmoihjweknlt.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRwYnZ3bXB2ZG1vaWhqd2Vrbmx0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc5MDkwNjksImV4cCI6MjEwMzQ4NTA2OX0.nPAjPGVHrv_2TL-8d2iq1xhLXyIlI-MlU2bhTJkUt_A';
-
-// Initialize Supabase using the script tag loaded from index.html
-const supabase = window.supabase.createClient(dpbvwmpvdmoihjweknlt, eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRwYnZ3bXB2ZG1vaWhqd2Vrbmx0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc5MDkwNjksImV4cCI6MjEwMzQ4NTA2OX0.nPAjPGVHrv_2TL-8d2iq1xhLXyIlI-MlU2bhTJkUt_A);
